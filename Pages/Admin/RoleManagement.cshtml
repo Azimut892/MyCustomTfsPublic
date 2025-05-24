@@ -1,0 +1,101 @@
+﻿@page
+@model MyFirstWebApp.Pages.Admin.RoleManagementModel
+@{
+    ViewData["Title"] = "Manage User Roles";
+
+    Layout = "_Layout";
+}
+
+<div class="max-w-2xl mx-auto p-6">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Role Management</h2>
+
+    <div class="mb-8">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Create New Role</h3>
+        <form method="post" asp-page-handler="CreateRole">
+            <div class="flex space-x-4">
+                <input type="text"
+                       class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                       asp-for="NewRoleName"
+                       placeholder="Role name">
+                <button type="submit"
+                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Create Role
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-8">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">User Roles</h3>
+        <div class="mt-4 flex flex-col">
+            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">User</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Current Roles</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                                @foreach (var user in Model.Users)
+
+                                {
+                                    <tr>
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900">@user.UserName</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">@string.Join(", ", user.Roles)</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="relative" x-data="{ open: false }">
+                                                    <button type="button"
+                                                            @@click="open = !open"
+                                                            class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                        Assign Role
+                                                    </button>
+                                                    <div x-show="open"
+                                                         @@click.away="open = false"
+                                                         class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 max-h-60 overflow-y-auto">
+                                                        @foreach (var role in Model.Roles)
+                                                        {
+                                                            <form method="post" asp-page-handler="AssignRole">
+                                                                <input type="hidden" name="userId" value="@user.UserId" />
+                                                                <input type="hidden" name="roleName" value="@role.Name" />
+                                                                <button type="submit"
+                                                                        class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                                                    @role.Name
+                                                                </button>
+                                                            </form>
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                                @foreach (var role in user.Roles)
+
+                                                {
+                                                    <form method="post" asp-page-handler="RemoveRole">
+                                                        <input type="hidden" name="userId" value="@user.UserId" />
+                                                        <input type="hidden" name="roleName" value="@role" />
+                                                        <button type="submit"
+                                                                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                                            Remove @role
+                                                        </button>
+                                                    </form>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+}

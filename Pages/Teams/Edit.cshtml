@@ -1,0 +1,59 @@
+﻿@page
+@model MyFirstWebApp.Pages.Teams.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>EditTeam</h1>
+
+<h4>Team</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Team.Id" />
+            <div class="form-group">
+                <label asp-for="Team.Name" class="control-label"></label>
+                <input asp-for="Team.Name" class="form-control" />
+                <span asp-validation-for="Team.Name" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Team.ManagerId" class="block text-sm font-medium text-gray-700"></label>
+                <div class="mt-1">
+                    <select asp-for="Team.ManagerId"
+                            asp-items="Model.AvailableManagers"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <option value="">Select User</option>
+                    </select>
+                </div>
+                <span asp-validation-for="Team.ManagerId" class="text-sm text-red-600"></span>
+            </div>
+            <div>
+            <label asp-for="Team.Members" class="block text-sm font-medium text-gray-700">Team Members</label>
+            <div class="mt-1">
+            <select asp-for="SelectedMemberIds"
+                    asp-items="Model.AvailableMembers"
+                    multiple
+                    class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                    size="5">
+            </select>
+            </div>
+            <p class="mt-1 text-sm text-gray-500">Hold Ctrl/Cmd to select multiple members</p>
+            </div
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

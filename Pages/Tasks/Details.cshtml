@@ -1,0 +1,86 @@
+﻿@page
+@model DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow">
+    <h1 class="text-3xl font-bold mb-4">Details</h1>
+    <div>
+        <h4 class="text-xl font-semibold">TaskItem Details</h4>
+        <hr class="my-4 border-gray-300" />
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6">
+            <div>
+                <dt class="font-medium text-gray-600">
+                    @Html.DisplayNameFor(model => model.TaskItem.Title)
+                </dt>
+                <dd class="text-gray-800">
+                    @Html.DisplayFor(model => model.TaskItem.Title)
+                </dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600">
+                    @Html.DisplayNameFor(model => model.TaskItem.Description)
+                </dt>
+                <dd class="text-gray-800">
+                    @Html.DisplayFor(model => model.TaskItem.Description)
+                </dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600">
+                    @Html.DisplayNameFor(model => model.TaskItem.CreatedDate)
+                </dt>
+                <dd class="text-gray-800">
+                    @Html.DisplayFor(model => model.TaskItem.CreatedDate)
+                </dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600">
+                    @Html.DisplayNameFor(model => model.TaskItem.EstimatedTime)
+                </dt>
+                <dd class="text-gray-800">
+                    @Html.DisplayFor(model => model.TaskItem.EstimatedTime)
+                </dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600">
+                    @Html.DisplayNameFor(model => model.TaskItem.Status)
+                </dt>
+                <dd class="text-gray-800">
+                    @Html.DisplayFor(model => model.TaskItem.Status)
+                </dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600">
+                    @Html.DisplayNameFor(model => model.TaskItem.AssignedToUser)
+                </dt>
+                <dd class="text-gray-800">
+                    @Html.DisplayFor(model => model.TaskItem.AssignedToUser.UserName)
+                </dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600">
+                    @Html.DisplayNameFor(model => model.TaskItem.Team)
+                </dt>
+                <dd class="text-gray-800">
+                    @Html.DisplayFor(model => model.TaskItem.Team.Id)
+                </dd>
+            </div>
+            <div>
+                <dt class="font-medium text-gray-600">
+                    @Html.DisplayNameFor(model => model.TaskItem.Project)
+                </dt>
+                <dd class="text-gray-800">
+                    @Html.DisplayFor(model => model.TaskItem.Project.Id)
+                </dd>
+            </div>
+        </dl>
+    </div>
+    <div class="mt-6 flex space-x-4">
+        <a asp-page="./Edit" asp-route-id="@Model.TaskItem.Id" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Edit</a>
+        <a asp-page="./Index" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">Back to List</a>
+    </div>
+</div>

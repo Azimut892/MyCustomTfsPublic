@@ -1,0 +1,12 @@
+﻿services:
+  - type: web
+    name: CustomTfs
+    runtime: docker
+    region: frankfurt
+    branch: dev
+    envVars:
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+    autoDeploy: true

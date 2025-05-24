@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@using Microsoft.AspNetCore.Identity
+@using MyFirstWebApp.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    if (!SignInManager.IsSignedIn(User))
+    {
+        Context.Response.Redirect("/Identity/Account/Login");
+    }
+}
+
